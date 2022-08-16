@@ -13,6 +13,6 @@ router.post('/registration', [
 
 router.post('/login', AuthController.login);
 
-router.get('/users', [roleMiddleware(['USER', 'ADMIN'])], AuthController.getUsers);
+router.get('/users', [roleMiddleware(['MENTOR', 'ADMIN', 'STUDENT'])], AuthController.getUsers);
 
 export default router;
