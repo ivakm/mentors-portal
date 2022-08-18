@@ -15,4 +15,6 @@ router.post('/login', AuthController.login);
 
 router.get('/users', [roleMiddleware(['MENTOR', 'ADMIN', 'STUDENT'])], AuthController.getUsers);
 
+router.get('/user',  [roleMiddleware(['MENTOR', 'ADMIN', 'STUDENT'])], AuthController.getCurrentUser);
+
 export default router;
