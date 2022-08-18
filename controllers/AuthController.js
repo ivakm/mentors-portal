@@ -52,8 +52,8 @@ class AuthController {
 
             const token = generatedAccessToken(user._id, user.roles);
             return res.json({ token });
-        } catch(e) {
-            res.status(400).json({message: e});
+        } catch (e) {
+            res.status(400).json({ message: e });
         }
     }
 
@@ -62,7 +62,19 @@ class AuthController {
             const users = await User.find();
             res.json(users);
         } catch (e) {
-            res.status(400).json({message: e});
+            res.status(400).json({ message: e });
+        }
+    }
+
+    async getCurrentUser(req, res) {
+        try {
+            let token = req.headers.authorization.split(" ")[1];
+            let result = jwt.verify(token, config.secret, { expiresIn: '24h' });
+            const user = await User.findById(result.id);
+            const { username, roles } = user;
+            res.status(200).json({username, roles});
+        } catch (e) {
+            res.status(400).json({ message: 'Something went wrong' });
         }
     }
 }
